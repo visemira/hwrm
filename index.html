@@ -1,14 +1,44 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Resources Management</title>
-  </head>
-  <body>
-    <h1 class="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Artifact Optimizer v9</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-white flex justify-center p-6">
+
+<div class="w-full max-w-xl bg-gray-800 p-6 rounded-xl space-y-4">
+
+  <h1 class="text-xl font-bold text-center">
+    Artifact Optimizer v9 (Minimal Correct)
+  </h1>
+
+  <input id="level" type="number"
+    placeholder="Current Level"
+    class="w-full p-2 bg-gray-700 rounded">
+
+  <h2 class="font-semibold">Inventory</h2>
+
+  <div class="grid grid-cols-2 gap-2">
+    <input id="white" placeholder="⚪ White" class="p-2 bg-gray-700 rounded">
+    <input id="green" placeholder="🟢 Green" class="p-2 bg-gray-700 rounded">
+    <input id="blue" placeholder="🔵 Blue" class="p-2 bg-gray-700 rounded">
+    <input id="violet" placeholder="🟣 Violet" class="p-2 bg-gray-700 rounded">
+    <input id="orange" placeholder="🟠 Orange" class="p-2 bg-gray-700 rounded">
+    <input id="red" placeholder="🔴 Red" class="p-2 bg-gray-700 rounded">
+  </div>
+
+  <button onclick="calc()"
+    class="w-full bg-blue-600 hover:bg-blue-700 p-2 rounded">
+    Calculate
+  </button>
+
+  <pre id="out" class="bg-gray-900 p-3 rounded whitespace-pre-wrap"></pre>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
 </html>
