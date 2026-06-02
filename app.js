@@ -33,11 +33,11 @@ function calc(){
 
   const segments = [
     { name:"white", start:1, end:25, value:1 },
-    { name:"green", start:26, end:50, value:2 },
-    { name:"blue", start:51, end:70, value:4 },
-    { name:"violet", start:71, end:85, value:8 },
-    { name:"orange", start:86, end:100, value:16 },
-    { name:"red", start:101, end:130, value:32 }
+    { name:"green", start:25, end:50, value:2 },
+    { name:"blue", start:50, end:70, value:4 },
+    { name:"violet", start:70, end:85, value:8 },
+    { name:"orange", start:85, end:100, value:16 },
+    { name:"red", start:100, end:130, value:32 }
   ];
 
   const CF_100 = 19204;
@@ -56,12 +56,17 @@ function calc(){
 
     const startLevel = Math.max(lvl, seg.start);
 
-    const costCF =
-      cf[seg.end - 1] - cf[startLevel - 1 < 0 ? 0 : startLevel - 1];
+    const startCF = cf[startLevel - 1 < 0 ? 0 : startLevel - 1];
+    const endCF = cf[seg.end - 1]; 
+
+    const costCF = endCF - startCF;
+    //   cf[seg.end - 1] - cf[startLevel - 1 < 0 ? 0 : startLevel - 1];
 
     const inv = inventory[seg.name];
 
     const remainingCF = Math.max(costCF - inv * seg.value, 0);
+    
+    const artifacts = Math.ceil(remainingCF / seg.value);
 
     let chests = Math.ceil(remainingCF / (seg.value * 5));
 
@@ -70,9 +75,12 @@ function calc(){
     } else {
       totalOrange += chests;
     }
-
+//     start cf: ${startCF}
+//     end cf: ${endCF}
+//     cost cf : ${costCF}
+//   Remaining CF: ${remainingCF}
     result += `${seg.name.toUpperCase()}:
-  Remaining CF: ${remainingCF}
+  Artifacts: ${artifacts}
   Chests needed: ${chests}
 
 `;
