@@ -67,8 +67,22 @@ function calc(){
     const remainingCF = Math.max(costCF - inv * seg.value, 0);
     
     const artifacts = Math.ceil(remainingCF / seg.value);
-
     let chests = Math.ceil(remainingCF / (seg.value * 5));
+
+    switch (seg.name) {
+      case "violet":
+        chests = Math.ceil(artifacts /(80/seg.value));
+        break;
+      case "blue":
+        chests = Math.ceil(artifacts / (80/seg.value));
+        break;
+      case "green":
+        chests = Math.ceil(artifacts / (80/seg.value));
+        break;
+      case "white":
+        chests = Math.ceil(artifacts / (80/seg.value));
+        break;
+    }
 
     if (seg.name === "red") {
       totalRed += chests;
@@ -81,8 +95,7 @@ function calc(){
 //   Remaining CF: ${remainingCF}
     result += `${seg.name.toUpperCase()}:
   Artifacts: ${artifacts}
-  Chests needed: ${chests}
-
+  🟠 Orange Chests: ${chests}
 `;
   });
 
