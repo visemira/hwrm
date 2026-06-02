@@ -1,0 +1,88 @@
+const cf = [
+0,3,8,15,24,35,48,63,80,99,
+120,143,168,195,224,255,288,323,360,399,
+440,483,528,575,624,684,746,810,876,944,
+1014,1086,1160,1236,1314,1394,1476,1560,1646,1734,
+1824,1916,2010,2106,2204,2304,2406,2510,2616,2724,
+2844,2968,3096,3228,3364,3504,3648,3796,3948,4104,
+4264,4428,4596,4768,4944,5124,5308,5496,5688,5884,
+6124,6372,6628,6892,7164,7444,7732,8028,8332,8644,
+8964,9292,9628,9972,10324,10804,11300,11812,12340,12884,
+13444,14020,14612,15220,15844,16484,17140,17812,18500,19204,
+20484,21796,23140,24516,25924,27364,28836,30340,31876,33444,
+35044,36676,38340,40036,41764,43524,45316,47140,48996,50884,
+52804,54756,56740,58756,60804,62884,64996,67140,69316,71524
+];
+
+function get(id){
+  return parseInt(document.getElementById(id).value || 0);
+}
+
+function calc(){
+
+  const lvl = get("level");
+
+  const inventory = {
+    white: get("white"),
+    green: get("green"),
+    blue: get("blue"),
+    violet: get("violet"),
+    orange: get("orange"),
+    red: get("red")
+  };
+
+  const segments = [
+    { name:"white", start:1, end:25, value:1 },
+    { name:"green", start:26, end:50, value:2 },
+    { name:"blue", start:51, end:70, value:4 },
+    { name:"violet", start:71, end:85, value:8 },
+    { name:"orange", start:86, end:100, value:16 },
+    { name:"red", start:101, end:130, value:32 }
+  ];
+
+  const CF_100 = 19204;
+  const CF_130 = 71524;
+
+  const ORANGE_CHEST = 80;
+  const RED_CHEST = 160;
+
+  let result = "";
+  let totalOrange = 0;
+  let totalRed = 0;
+
+  segments.forEach(seg => {
+
+    if (lvl > seg.end) return;
+
+    const startLevel = Math.max(lvl, seg.start);
+
+    const costCF =
+      cf[seg.end - 1] - cf[startLevel - 1 < 0 ? 0 : startLevel - 1];
+
+    const inv = inventory[seg.name];
+
+    const remainingCF = Math.max(costCF - inv * seg.value, 0);
+
+    let chests = Math.ceil(remainingCF / (seg.value * 5));
+
+    if (seg.name === "red") {
+      totalRed += chests;
+    } else {
+      totalOrange += chests;
+    }
+
+    result += `${seg.name.toUpperCase()}:
+  Remaining CF: ${remainingCF}
+  Chests needed: ${chests}
+
+`;
+  });
+
+  result += `
+TOTAL:
+🟠 Orange chests: ${totalOrange}
+🔴 Red chests: ${totalRed}
+`;
+
+  document.getElementById("out").innerText = result;
+}
